@@ -26,8 +26,13 @@ def load_titanic_data():
     # Drop columns with too many missing values or redundant info
     df = df.drop(columns=["deck", "embark_town", "alive"])
 
-    # Drop rows with critical missing values
-    df = df.dropna(subset=["embarked", "age"])
+    # Drop columns with more than p(%) missing values - adjust p as needed
+    # Here, we set p to 10% as an example
+    p = 0.10 
+    threshold = p * len(df)
+    cols_to_drop = [col for col in df.columns if df[col].isnull().sum() > threshold]
+    print(f"Dropping columns with more than 10% missing values: {cols_to_drop} \n")
+    df = df.drop(columns=cols_to_drop)
 
     # Fill missing values in 'embarked' with the most common port
 
