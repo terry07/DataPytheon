@@ -19,6 +19,10 @@ def load_titanic_data():
     # Load dataset from seaborn
     df = sns.load_dataset("titanic")
 
+    # Display initial structure the dataset
+    print("==Initial dataset structure==")
+    print(df.shape, "\n")
+
     # Drop columns with too many missing values or redundant info
     df = df.drop(columns=["deck", "embark_town", "alive"])
 
@@ -29,6 +33,7 @@ def load_titanic_data():
 
     # First, detect the most common value (mode) in the 'embarked' column
     most_common_embarked = df["embarked"].mode()[0]
+    print(f"Most common embarked value: {most_common_embarked} \n")
 
     # Then, fill missing values with the most common value
     df["embarked"] = df["embarked"].fillna(most_common_embarked)
@@ -37,6 +42,10 @@ def load_titanic_data():
     cat_cols = ["sex", "class", "embarked", "who", "adult_male", "alone"]
     for col in cat_cols:
         df[col] = df[col].astype("category")
+
+    # Display structure of the dataset after our prepriocessing
+    print("==Final dataset structure==")
+    print(df.shape, "\n")
 
     return df
 
