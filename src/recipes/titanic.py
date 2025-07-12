@@ -26,7 +26,12 @@ def load_titanic_data():
     df = df.dropna(subset=["embarked", "age"])
 
     # Fill missing values in 'embarked' with the most common port
-    df["embarked"] = df["embarked"].fillna("S")
+
+    # First, detect the most common value (mode) in the 'embarked' column
+    most_common_embarked = df["embarked"].mode()[0]
+
+    # Then, fill missing values with the most common value
+    df["embarked"] = df["embarked"].fillna(most_common_embarked)
 
     # Convert categorical columns to category dtype
     cat_cols = ["sex", "class", "embarked", "who", "adult_male", "alone"]
